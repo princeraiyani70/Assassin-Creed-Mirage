@@ -19,12 +19,26 @@ public class PlayerScript : MonoBehaviour
     public Vector3 surfaceCheckOffset;
     public LayerMask surfaceLayer;
     bool onSurface;
+    [SerializeField] float fallingSpeed;
+    [SerializeField] Vector3 moveDir;
 
     private void Update()
     {
+        if (onSurface)
+        {
+            fallingSpeed = -0.5f;
+        }
+        else
+        {
+            fallingSpeed += Physics.gravity.y * Time.deltaTime;
+        }
+
+        var velocity = moveDir * movementSpeed;
+        velocity.y = fallingSpeed;
+
         PlayerMovement();
         SurfaceCheck();
-        Debug.Log("Player On Surface"+ onSurface);
+        Debug.Log("Player On Surface" + onSurface);
     }
 
     void PlayerMovement()
@@ -38,11 +52,13 @@ public class PlayerScript : MonoBehaviour
 
         var movementDirection = MCC.flotRotation * movementInput;
 
+        Cc.Move(movementDirection * movementSpeed * Time.deltaTime);
         if (movementAmount > 0)
         {
-            Cc.Move(movementDirection * movementSpeed * Time.deltaTime);
             requireRotation = Quaternion.LookRotation(movementDirection);
         }
+
+        movementDirection = moveDir;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, rotSpeed * Time.deltaTime);
 
@@ -51,7 +67,7 @@ public class PlayerScript : MonoBehaviour
 
     void SurfaceCheck()
     {
-        onSurface=Physics.CheckSphere(transform.TransformPoint(surfaceCheckOffset),surfaceCheckRadius,surfaceLayer);
+        onSurface = Physics.CheckSphere(transform.TransformPoint(surfaceCheckOffset), surfaceCheckRadius, surfaceLayer);
     }
 
     private void OnDrawGizmosSelected()
