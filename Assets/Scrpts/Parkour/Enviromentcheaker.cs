@@ -6,6 +6,7 @@ public class Enviromentcheaker : MonoBehaviour
 {
     public Vector3 rayOffset = new Vector3(0, 0.2f, 0);
     public float rayLength = 0.9f;
+    public float heightRayLength = 6f;
     public LayerMask obtacleLayer;
 
     public ObstaceInfo CheckObstacle()
@@ -17,6 +18,14 @@ public class Enviromentcheaker : MonoBehaviour
 
         Debug.DrawRay(rayOrigin, transform.forward * rayLength, (hitData.hitFound) ? Color.red : Color.green);
 
+        if (hitData.hitFound)
+        {
+            var heightOrigin = hitData.hitInfo.point + Vector3.up * heightRayLength;
+            hitData.hitFound = Physics.Raycast(heightOrigin, Vector3.down, out hitData.heightInfo, heightRayLength, obtacleLayer);
+
+            Debug.DrawRay(heightOrigin, Vector3.down * heightRayLength, (hitData.heightHitFound) ? Color.blue : Color.green);
+        }
+
         return hitData;
     }
 }
@@ -24,5 +33,7 @@ public class Enviromentcheaker : MonoBehaviour
 public struct ObstaceInfo
 {
     public bool hitFound;
+    public bool heightHitFound;
     public RaycastHit hitInfo;
+    public RaycastHit heightInfo;
 }
