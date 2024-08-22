@@ -7,33 +7,66 @@ public class ParkourControllerScript : MonoBehaviour
     public Enviromentcheaker enviromentCheaker;
     bool playerInAction;
     public Animator animator;
+    public PlayerScript playerScript;
 
+    [Header("Parkour Action Area")]
+    public List<NewParkourAction> newParkourActions;
 
     private void Update()
     {
-        if (Input.GetButton("Jump")  && !playerInAction)
+        if (Input.GetButton("Jump") && !playerInAction)
         {
             var hitData = enviromentCheaker.CheckObstacle();
 
             if (hitData.hitFound)
             {
                 //Debug.Log("Objcet Founded" + hitData.hitInfo.transform.name);
-                StartCoroutine(PerformParkourAction());
+
+                foreach (var action in newParkourActions)
+                {
+                    if (action.CheckIfAvailable(hitData, transform))
+                    {
+                        StartCoroutine(PerformParkourAction(action));
+                        break;
+                    }
+                }
             }
         }
     }
 
-    IEnumerator PerformParkourAction()
+    IEnumerator PerformParkourAction(NewParkourAction action)
     {
         playerInAction = true;
+        playerScript.SetControl(false);
 
-        animator.CrossFade("JumpUp", 0.2f);
+        animator.CrossFade(action.AnimationName, 0.2f);
         yield return null;
 
         var animationState = animator.GetNextAnimatorStateInfo(0);
+        if (!animationState.IsName(action.AnimationName))
+        {
+            Debug.Log("Animation Name Is Incorrect");
+        }
 
-        yield return new WaitForSeconds(animationState.length);
 
+        float timerCounter = 0f;
+
+        while (timerCounter <= animationState.length)
+        {
+            timerCounter += Time.deltaTime;
+
+            if (action.LookAtObstacle)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, action.RequiredRotation, playerScript.rotSpeed * Time.deltaTime);
+
+            }
+
+
+            yield return null;
+        }
+
+
+        playerScript.SetControl(true);
         playerInAction = false;
     }
 }
