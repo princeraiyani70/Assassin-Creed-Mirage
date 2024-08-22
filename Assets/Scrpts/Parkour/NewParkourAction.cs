@@ -8,6 +8,7 @@ public class NewParkourAction : ScriptableObject
 {
     [Header("Checking Obstacle Height")]
     [SerializeField] string animationName;
+    [SerializeField] string BarrierTag;
     [SerializeField] float minimumHeight;
     [SerializeField] float maximumHeight;
 
@@ -26,10 +27,16 @@ public class NewParkourAction : ScriptableObject
 
     public bool CheckIfAvailable(ObstaceInfo hitData, Transform player)
     {
-        float checkHeight = hitData.heightInfo.point.y - player.position.y;
-
-        if (checkHeight < minimumHeight || checkHeight > maximumHeight)
+        if (!string.IsNullOrEmpty(BarrierTag)&& hitData.hitInfo.transform.tag!=BarrierTag)
+        {
             return false;
+        }
+
+        float checkHeight = hitData.heightInfo.point.y - player.position.y;
+        if (checkHeight < minimumHeight || checkHeight > maximumHeight)
+        {
+            return false;
+        }
 
         if (lookAtObstacle)
         {
