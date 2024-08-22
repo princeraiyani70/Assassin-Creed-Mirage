@@ -61,6 +61,10 @@ public class ParkourControllerScript : MonoBehaviour
 
             }
 
+            if (action.AllowTargetMatching)
+            {
+                CompareTarget(action);
+            }
 
             yield return null;
         }
@@ -68,5 +72,10 @@ public class ParkourControllerScript : MonoBehaviour
 
         playerScript.SetControl(true);
         playerInAction = false;
+    }
+
+    void CompareTarget(NewParkourAction action)
+    {
+        animator.MatchTarget(action.ComparePosition, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeight,0), action.CompareStartTime, action.CompareEndTime);
     }
 }
