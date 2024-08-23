@@ -48,6 +48,7 @@ public class PlayerScript : MonoBehaviour
                 playerLedgeMovement();
                 Debug.Log("Player On Ledge");
             }
+            animator.SetFloat("movementValue", velocity.magnitude / movementSpeed, 0.2f, Time.deltaTime);
         }
         else
         {
@@ -76,7 +77,7 @@ public class PlayerScript : MonoBehaviour
         requiredMoveDir = MCC.flotRotation * movementInput;
 
         Cc.Move(velocity * movementSpeed * Time.deltaTime);
-        if (movementAmount > 0)
+        if (movementAmount > 0 && moveDir.magnitude > 0.2f)
         {
             requireRotation = Quaternion.LookRotation(moveDir);
         }
@@ -84,8 +85,6 @@ public class PlayerScript : MonoBehaviour
         moveDir = requiredMoveDir;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, rotSpeed * Time.deltaTime);
-
-        animator.SetFloat("movementValue", movementAmount, 0.2f, Time.deltaTime);
     }
 
     void playerLedgeMovement()
@@ -120,5 +119,11 @@ public class PlayerScript : MonoBehaviour
             animator.SetFloat("movementValue", 0f);
             requireRotation = transform.rotation;
         }
+    }
+
+    public bool HasPlayerControl
+    {
+        get => playerControl;
+        set => playerControl = value;
     }
 }
