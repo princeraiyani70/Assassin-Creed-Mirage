@@ -15,9 +15,10 @@ public class ParkourControllerScript : MonoBehaviour
 
     private void Update()
     {
+
+        var hitData = enviromentCheaker.CheckObstacle();
         if (Input.GetButton("Jump") && !playerInAction)
         {
-            var hitData = enviromentCheaker.CheckObstacle();
 
             if (hitData.hitFound)
             {
@@ -34,10 +35,14 @@ public class ParkourControllerScript : MonoBehaviour
             }
         }
 
-        if (playerScript.playerOnLedge && !playerInAction)
+        if (playerScript.playerOnLedge && !playerInAction&&!hitData.hitFound&&Input.GetButton("Jump"))
         {
-            playerScript.playerOnLedge = false;
-            StartCoroutine(PerformParkourAction(jumpDownParkourAction));
+            if (playerScript.LedgeInfo.angle <= 50)
+            {
+                playerScript.playerOnLedge = false;
+                StartCoroutine(PerformParkourAction(jumpDownParkourAction));
+
+            }
         }
     }
 
@@ -89,6 +94,6 @@ public class ParkourControllerScript : MonoBehaviour
 
     void CompareTarget(NewParkourAction action)
     {
-        animator.MatchTarget(action.ComparePosition, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeight,0), action.CompareStartTime, action.CompareEndTime);
+        animator.MatchTarget(action.ComparePosition, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeight, 0), action.CompareStartTime, action.CompareEndTime);
     }
 }
