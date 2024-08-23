@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     public float movementSpeed = 5f;
     public float rotSpeed = 600f;
     public MainCameraController MCC;
+    public Enviromentcheaker Enviromentcheaker;
     Quaternion requireRotation;
     bool playerControl = true;
 
@@ -20,12 +21,12 @@ public class PlayerScript : MonoBehaviour
     public Vector3 surfaceCheckOffset;
     public LayerMask surfaceLayer;
     bool onSurface;
+    public bool playerOnLedge { get; set; }
     [SerializeField] float fallingSpeed;
     [SerializeField] Vector3 moveDir;
 
     private void Update()
     {
-        PlayerMovement();
         if (!playerControl)
             return;
 
@@ -33,6 +34,12 @@ public class PlayerScript : MonoBehaviour
         if (onSurface)
         {
             fallingSpeed = -0.5f;
+
+            playerOnLedge = Enviromentcheaker.CheclLedge(moveDir);
+            if (playerOnLedge)
+            {
+                Debug.Log("Player On Ledge");
+            }
         }
         else
         {
@@ -42,7 +49,9 @@ public class PlayerScript : MonoBehaviour
         var velocity = moveDir * movementSpeed;
         velocity.y = fallingSpeed;
 
+        PlayerMovement();
         SurfaceCheck();
+        animator.SetBool("onSurface", onSurface);
         Debug.Log("Player On Surface" + onSurface);
     }
 
@@ -63,7 +72,7 @@ public class PlayerScript : MonoBehaviour
             requireRotation = Quaternion.LookRotation(movementDirection);
         }
 
-        movementDirection = moveDir;
+        moveDir = movementDirection;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, rotSpeed * Time.deltaTime);
 

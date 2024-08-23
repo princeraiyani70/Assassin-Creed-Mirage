@@ -9,6 +9,11 @@ public class Enviromentcheaker : MonoBehaviour
     public float heightRayLength = 6f;
     public LayerMask obtacleLayer;
 
+
+    [Header("Check Ledges")]
+    [SerializeField] float ledgeEatLength = 11f;
+    [SerializeField] float ledgeRayHeightThreshold = 0.76f;
+
     public ObstaceInfo CheckObstacle()
     {
         var hitData = new ObstaceInfo();
@@ -28,7 +33,31 @@ public class Enviromentcheaker : MonoBehaviour
 
         return hitData;
     }
+
+    public bool CheclLedge(Vector3 movementDirection)
+    {
+        if (movementDirection == Vector3.zero)
+            return false;
+
+        float ledgeOriginOffset = 0.5f;
+        var ledgeOrigin = transform.position + movementDirection * ledgeOriginOffset+Vector3.up;
+
+        if (Physics.Raycast(ledgeOrigin, Vector3.down, out RaycastHit hit, ledgeRayHeightThreshold, obtacleLayer))
+        {
+            Debug.DrawRay(ledgeOrigin, Vector3.down * ledgeEatLength, Color.blue);
+
+            float Ledgeheight = transform.position.y - hit.point.y;
+
+            if (Ledgeheight > ledgeRayHeightThreshold)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
+
 
 public struct ObstaceInfo
 {
