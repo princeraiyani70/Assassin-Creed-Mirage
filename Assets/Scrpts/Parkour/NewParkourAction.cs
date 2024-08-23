@@ -14,6 +14,7 @@ public class NewParkourAction : ScriptableObject
 
     [Header("Rotating Player Towars Obstacle")]
     [SerializeField] bool lookAtObstacle;
+    [SerializeField] float parkourActionDelay;
     public Quaternion RequiredRotation { get; set; }
 
     [Header("Target Matching")]
@@ -53,7 +54,7 @@ public class NewParkourAction : ScriptableObject
 
     public string AnimationName => animationName;
     public bool LookAtObstacle => lookAtObstacle;
-
+    public float ParloutActionDelay => parkourActionDelay;
     public bool AllowTargetMatching=>allowTargetMatching;
     public AvatarTarget CompareBodyPart=> compareBodyPart;
 
