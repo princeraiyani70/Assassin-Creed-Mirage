@@ -47,7 +47,6 @@ public class ParkourControllerScript : MonoBehaviour
             {
                 playerScript.playerOnLedge = false;
                 StartCoroutine(PerformParkourAction(jumpDownParkourAction));
-
             }
         }
     }
