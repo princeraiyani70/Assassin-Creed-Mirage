@@ -55,6 +55,6 @@ public class WaypointManagerWindow : EditorWindow
             waypoint.transform.forward = waypoint.previousWaypoint.transform.forward;
         }
 
-        Selection.activeObject = waypoint.gameObject;
+        Selection.activeObject = waypoint.gameObject;   
     }
 }
