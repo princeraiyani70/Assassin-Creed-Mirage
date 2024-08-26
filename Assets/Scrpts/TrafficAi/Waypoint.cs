@@ -11,7 +11,7 @@ public class Waypoint : MonoBehaviour
     [Range(0f, 5f)]
     public float waypointWidth = 1f;
 
-    public Vector3 GetpointWidth()
+    public Vector3 GetPosition()
     {
         Vector3 minBound = transform.position + transform.right * waypointWidth / 2f;
         Vector3 maxBound = transform.position - transform.right * waypointWidth / 2f;
