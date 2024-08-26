@@ -6,7 +6,7 @@ public class Bazooka : MonoBehaviour
 {
     [Header("Rifle Things")]
     public Transform shootingArea;
-    public float giveDamage = 120 f;
+    public float giveDamage = 120f;
     public float shootingRange = 100f;
     public Animator animator;
     public bool isMoving;
