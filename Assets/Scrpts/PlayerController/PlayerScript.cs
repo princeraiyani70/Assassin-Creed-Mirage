@@ -7,8 +7,11 @@ public class PlayerScript : MonoBehaviour
     [Header("Player Health & Energy")]
     public float playerHealth = 200f;
     public float presentHealth;
+    public HealthBar healthBar;
     private float playerEnergy = 100f;
     public float presentEnergy;
+    public EnergyBar energyBar;
+    public GameObject DamageIndicator;
 
     [Header("Player Movement")]
     public float movementSpeed = 5f;
@@ -38,6 +41,9 @@ public class PlayerScript : MonoBehaviour
     {
         presentHealth=playerHealth;
         presentEnergy=playerEnergy;
+
+        healthBar.GiveFullHealth(presentHealth);
+        energyBar.GiveFullEnergy(presentEnergy);
     }
 
     private void Update()
@@ -167,7 +173,8 @@ public class PlayerScript : MonoBehaviour
     public void playerHitDamage(float takeDamage)
     {
         presentHealth-=takeDamage;
-
+        healthBar.SetHealth(presentHealth);
+        StartCoroutine(ShowDamage());
         if (presentHealth <= 0)
         {
             PlayerDie();
@@ -183,6 +190,7 @@ public class PlayerScript : MonoBehaviour
     public void playerenergyDecrease(float energyDecrease)
     {
         presentEnergy-=energyDecrease;
+        energyBar.SetEnergy(presentEnergy);
     }
 
     IEnumerator setEnergy()
@@ -190,5 +198,13 @@ public class PlayerScript : MonoBehaviour
         presentEnergy = 0f;
         yield return new WaitForSeconds(5f);
         presentEnergy = 100f;
+        energyBar.GiveFullEnergy(presentEnergy);
+    }
+
+    IEnumerator ShowDamage()
+    {
+        DamageIndicator.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        DamageIndicator.SetActive(false);
     }
 }
