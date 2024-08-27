@@ -148,6 +148,7 @@ public class KnightAi : MonoBehaviour
             if (playerScript != null)
             {
                 Debug.Log("Hitting Player");
+                playerScript.playerHitDamage(giveDamage);
             }
         }
         previuslyAttack = true;

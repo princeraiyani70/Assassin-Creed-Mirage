@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    [Header("Player Health & Energy")]
+    public float playerHealth = 200f;
+    public float presentHealth;
+    private float playerEnergy = 100f;
+    public float presentEnergy;
+
     [Header("Player Movement")]
     public float movementSpeed = 5f;
     public float rotSpeed = 600f;
@@ -28,8 +34,39 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] Vector3 requiredMoveDir;
     Vector3 velocity;
 
+    private void Awake()
+    {
+        presentHealth=playerHealth;
+        presentEnergy=playerEnergy;
+    }
+
     private void Update()
     {
+        if (presentEnergy <= 0)
+        {
+            movementSpeed = 2f;
+
+            if (!Input.GetButton("Horizontal") || !Input.GetButton("Vertical"))
+            {
+                animator.SetFloat("movementValue", 0f);
+            }
+            if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+            {
+                animator.SetFloat("movementValue", 0.5f);
+                StartCoroutine(setEnergy());
+            }
+        }
+
+        if (presentEnergy >= 1)
+        {
+            movementSpeed = 5f;
+        }
+
+        if (animator.GetFloat("movementValue") >= 0.9999)
+        {
+            playerenergyDecrease(0.02f);
+        }
+
         if (!playerControl)
             return;
 
@@ -125,5 +162,33 @@ public class PlayerScript : MonoBehaviour
     {
         get => playerControl;
         set => playerControl = value;
+    }
+
+    public void playerHitDamage(float takeDamage)
+    {
+        presentHealth-=takeDamage;
+
+        if (presentHealth <= 0)
+        {
+            PlayerDie();
+        }
+    }
+
+    private void PlayerDie()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Object.Destroy(gameObject, 1.0f);
+    }
+
+    public void playerenergyDecrease(float energyDecrease)
+    {
+        presentEnergy-=energyDecrease;
+    }
+
+    IEnumerator setEnergy()
+    {
+        presentEnergy = 0f;
+        yield return new WaitForSeconds(5f);
+        presentEnergy = 100f;
     }
 }
