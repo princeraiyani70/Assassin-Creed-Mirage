@@ -12,6 +12,7 @@ public class PickupItem : MonoBehaviour
     [Header("Player Info")]
     public Transform player;
     public Inventory inventory;
+    public GameManager GM;
 
 
     private void Start()
@@ -39,15 +40,16 @@ public class PickupItem : MonoBehaviour
                 }
                 else if (ItemTag == "Grenade")
                 {
+                    GM.numberOfgrenades += 5;
                     inventory.isWeapon4Picked = true;
                 }
                 else if (ItemTag == "Health")
                 {
-                    Debug.Log(ItemTag + " Pickup");
+                    GM.numberOfHealth += 1;
                 }
                 else if (ItemTag == "Energy")
                 {
-                    Debug.Log(ItemTag + " Pickup");
+                    GM.numberOfEnergy += 1;
                 }
 
                 ItemToPick.SetActive(false);

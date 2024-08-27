@@ -33,6 +33,7 @@ public class Inventory : MonoBehaviour
     [Header("Scripts")]
     public FirstFight fistFight;
     public PlayerScript playerScript;
+    public GameManager GM;
     public Animator anim;
 
     private void Update()
@@ -52,6 +53,49 @@ public class Inventory : MonoBehaviour
         {
             isWeapon1Active = false;
             IsRifleActive();
+        }
+
+        if (Input.GetKeyDown("2") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon2Picked == true)
+        {
+            isWeapon2Active = true;
+            IsRifleActive();
+        }
+        else if (Input.GetKeyDown("2") && isWeapon2Active == true)
+        {
+            isWeapon2Active = false;
+            IsRifleActive();
+        }
+
+        if (Input.GetKeyDown("3") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon3Picked == true)
+        {
+            isWeapon3Active = true;
+            IsRifleActive();
+        }
+        else if (Input.GetKeyDown("3") && isWeapon3Active == true)
+        {
+            isWeapon3Active = false;
+            IsRifleActive();
+        }
+
+        if (Input.GetKeyDown("4") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon4Picked == true)
+        {
+            isWeapon4Active = true;
+            IsRifleActive();
+        }
+        else if (Input.GetKeyDown("4") && isWeapon4Active == true)
+        {
+            isWeapon4Active = false;
+            IsRifleActive();
+        }
+
+        if (Input.GetKeyDown("5") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false &&GM.numberOfHealth>0)
+        {
+            StartCoroutine(IncreaseHealth());
+        }
+
+        if (Input.GetKeyDown("6") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfEnergy > 0)
+        {
+            StartCoroutine(IncreaseEnergy());
         }
 
     }
@@ -75,6 +119,44 @@ public class Inventory : MonoBehaviour
             SMAS.GetComponent<SingleMeleeAttack>().enabled = false;
             anim.SetBool("SingleHandAttackActive", false);
         }
+
+        if (isWeapon2Active == true)
+        {
+            StartCoroutine(Weapon2Go());
+            rifle.GetComponent<Rifle>().enabled = true;
+            anim.SetBool("RifleActive", true);
+        }
+        if (isWeapon2Active == false)
+        {
+            StartCoroutine(Weapon2Go());
+            rifle.GetComponent<Rifle>().enabled = false;
+            anim.SetBool("RifleActive", false);
+        }
+
+        if (isWeapon3Active == true)
+        {
+            StartCoroutine(Weapon3Go());
+            bazzoka.GetComponent<Bazooka>().enabled = true;
+            anim.SetBool("BazookaActive", true);
+        }
+        if (isWeapon3Active == false)
+        {
+            StartCoroutine(Weapon3Go());
+            bazzoka.GetComponent<Bazooka>().enabled = false;
+            anim.SetBool("BazookaActive", false);
+        }
+
+
+        if (isWeapon4Active == true)
+        {
+            StartCoroutine(Weapon4Go());
+            grenadethrower.GetComponent<GrenadeThrow>().enabled = true;
+        }
+        if (isWeapon4Active == false)
+        {
+            StartCoroutine(Weapon4Go());
+            grenadethrower.GetComponent<GrenadeThrow>().enabled = false;
+        }
     }
 
     IEnumerator Weapon1Go()
@@ -88,5 +170,64 @@ public class Inventory : MonoBehaviour
         {
             weapon1.SetActive(true);
         }
+    }
+
+    IEnumerator Weapon2Go()
+    {
+        if (!isWeapon2Active)
+        {
+            weapon2.SetActive(false);
+        }
+        yield return new WaitForSeconds(0.1f);
+        if (isWeapon2Active)
+        {
+            weapon2.SetActive(true);
+        }
+    }
+
+    IEnumerator Weapon3Go()
+    {
+        if (!isWeapon3Active)
+        {
+            weapon3.SetActive(false);
+        }
+        yield return new WaitForSeconds(0.1f);
+        if (isWeapon3Active)
+        {
+            weapon3.SetActive(true);
+        }
+    }
+
+    IEnumerator Weapon4Go()
+    {
+        if (!isWeapon4Active)
+        {
+            weapon4.SetActive(false);
+        }
+        yield return new WaitForSeconds(0.1f);
+        if (isWeapon4Active)
+        {
+            weapon4.SetActive(true);
+        }
+    }
+
+    IEnumerator IncreaseHealth()
+    {
+        anim.SetBool("Drink", true);
+        yield return new WaitForSeconds(1.5f);
+        anim.SetBool("Drink", false);
+        GM.numberOfHealth -= 1;
+        playerScript.presentHealth = 200f;
+        playerScript.healthBar.GiveFullHealth(200f); 
+    }
+
+    IEnumerator IncreaseEnergy()
+    {
+        anim.SetBool("Drink", true);
+        yield return new WaitForSeconds(1.5f);
+        anim.SetBool("Drink", false);
+        GM.numberOfEnergy -= 1;
+        playerScript.presentEnergy = 100f;
+        playerScript.energyBar.GiveFullEnergy(100f);
     }
 }
