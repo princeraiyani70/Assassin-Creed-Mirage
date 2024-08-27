@@ -11,6 +11,8 @@ public class PickupItem : MonoBehaviour
 
     [Header("Player Info")]
     public Transform player;
+    public Inventory inventory;
+
 
     private void Start()
     {
@@ -25,23 +27,19 @@ public class PickupItem : MonoBehaviour
             {
                 if (ItemTag == "Sword")
                 {
-                    Debug.Log(ItemTag + " Pickup");
+                    inventory.isWeapon1Picked = true;
                 }
                 else if (ItemTag == "Rifle")
                 {
-                    Debug.Log(ItemTag + " Pickup");
+                    inventory.isWeapon2Picked = true;
                 }
                 else if (ItemTag == "Bazooka")
                 {
-                    Debug.Log(ItemTag + " Pickup");
-                }
-                else if (ItemTag == "Sword")
-                {
-                    Debug.Log(ItemTag + " Pickup");
+                    inventory.isWeapon3Picked = true;
                 }
                 else if (ItemTag == "Grenade")
                 {
-                    Debug.Log(ItemTag + " Pickup");
+                    inventory.isWeapon4Picked = true;
                 }
                 else if (ItemTag == "Health")
                 {
