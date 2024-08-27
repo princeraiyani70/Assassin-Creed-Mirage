@@ -18,19 +18,32 @@ public class WeaponsMenu : MonoBehaviour
     [Header("Rations")]
     public Inventory inventory;
 
+    [Header("Menus")]
+    public GameObject playerUi;
+    public GameObject miniMapCanvas;
+    public GameObject currentMenuUi;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && weaponsMenuActive == false)
         {
             //Open weapon Menu
+            playerUi.SetActive(false);
+            miniMapCanvas.SetActive(false);
+            currentMenuUi.SetActive(false);
+
             weaponsMenuUi.SetActive(true);
             weaponsMenuActive = true;
             Time.timeScale = 0f;
             mainCamera.GetComponent<MainCameraController>().enabled = false;
         }
-        if (Input.GetKeyDown(KeyCode.Tab) && weaponsMenuActive == true)
+        else if (Input.GetKeyDown(KeyCode.Tab) && weaponsMenuActive == true)
         {
             //close weapon Menu
+            playerUi.SetActive(true);
+            miniMapCanvas.SetActive(true);
+            currentMenuUi.SetActive(true);
+
             weaponsMenuUi.SetActive(false);
             weaponsMenuActive = false;
             Time.timeScale = 1f;
