@@ -7,6 +7,12 @@ TagManager:
   - Fire
   - Barrier
   - ShortBarrier
+  - Sword
+  - Rifle
+  - Bazooka
+  - Grenade
+  - Health
+  - Energy
   layers:
   - Default
   - TransparentFX
