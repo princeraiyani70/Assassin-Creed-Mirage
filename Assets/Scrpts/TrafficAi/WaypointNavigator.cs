@@ -7,6 +7,7 @@ public class WaypointNavigator : MonoBehaviour
     [Header("Ai Character")]
     CharacterNavigationScript character;
     public Waypoint currentWaypoint;
+    int direction;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class WaypointNavigator : MonoBehaviour
 
     private void Start()
     {
+        direction = Mathf.RoundToInt(Random.Range(0f, 1f));
         character.LocateDestination(currentWaypoint.GetPosition());
     }
 
@@ -22,7 +24,15 @@ public class WaypointNavigator : MonoBehaviour
     {
         if (character.destinationReached)
         {
-            currentWaypoint = currentWaypoint.nextWaypoint;
+            if (direction == 0)
+            {
+                currentWaypoint = currentWaypoint.nextWaypoint;
+            }
+            else if (direction == 1)
+            {
+                currentWaypoint = currentWaypoint.previousWaypoint;
+            }
+
             character.LocateDestination(currentWaypoint.GetPosition());
         }
     }
