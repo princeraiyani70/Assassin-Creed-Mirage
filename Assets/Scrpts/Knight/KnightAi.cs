@@ -17,16 +17,32 @@ public class KnightAi : MonoBehaviour
     public Vector3 destination;
     public bool destinationReached;
 
+    [Header("knigh Ai")]
+    public GameObject playerBody;
+    public LayerMask playerLayer;
+    public float visionRadius;
+    public float attackRadius;
+    public bool playerInvisionRadius;
+
 
     private void Start()
     {
         CurrentmovingSpeed = movingSpeed;
         currenthealth = maxHealth;
+        playerBody = GameObject.Find("Player");
     }
 
     private void Update()
     {
-        Walk();
+        playerInvisionRadius = Physics.CheckSphere(transform.position, visionRadius, playerLayer);
+        if (!playerInvisionRadius)
+        {
+            Walk();
+        }
+        if (playerInvisionRadius)
+        {
+            ChasePlayer();
+        }
     }
 
     public void Walk()
@@ -56,6 +72,14 @@ public class KnightAi : MonoBehaviour
         }
     }
 
+
+    void ChasePlayer()
+    {
+        CurrentmovingSpeed = runningSpeed;
+        transform.position += transform.forward * CurrentmovingSpeed * Time.deltaTime;
+        transform.LookAt(playerBody.transform);
+    }
+
     public void LocateDestination(Vector3 destination)
     {
         this.destination = destination;
@@ -64,7 +88,7 @@ public class KnightAi : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        currenthealth-=amount;
+        currenthealth -= amount;
 
         if (currenthealth <= 0)
         {
