@@ -45,7 +45,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && fistFightMode==false)
+        if (isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && fistFightMode == false)
         {
             NoWeapon.SetActive(true);
         }
@@ -56,10 +56,10 @@ public class Inventory : MonoBehaviour
             IsRifleActive();
         }
 
-        if (Input.GetKeyDown("1") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false &&isWeapon1Picked==true)
+        if (Input.GetKeyDown("1") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon1Picked == true)
         {
             isWeapon1Active = true;
-            IsRifleActive() ;
+            IsRifleActive();
             CurrentWeapon1.SetActive(true);
             NoWeapon.SetActive(false);
         }
@@ -111,12 +111,20 @@ public class Inventory : MonoBehaviour
             CurrentWeapon4.SetActive(false);
         }
 
-        if (Input.GetKeyDown("5") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false &&GM.numberOfHealth>0)
+        if (GM.numberOfgrenades <= 0 && isWeapon4Active == true)
+        {
+            weapon4.SetActive(false);
+            isWeapon4Active = false;
+            CurrentWeapon4.SetActive(false);
+            IsRifleActive();
+        }
+
+        if (Input.GetKeyDown("5") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfHealth > 0 && playerScript.presentHealth < 95)
         {
             StartCoroutine(IncreaseHealth());
         }
 
-        if (Input.GetKeyDown("6") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfEnergy > 0)
+        if (Input.GetKeyDown("6") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfEnergy > 0 && playerScript.presentEnergy < 95)
         {
             StartCoroutine(IncreaseEnergy());
         }
@@ -241,7 +249,7 @@ public class Inventory : MonoBehaviour
         anim.SetBool("Drink", false);
         GM.numberOfHealth -= 1;
         playerScript.presentHealth = 200f;
-        playerScript.healthBar.GiveFullHealth(200f); 
+        playerScript.healthBar.GiveFullHealth(200f);
     }
 
     IEnumerator IncreaseEnergy()

@@ -9,6 +9,17 @@ public class GameManager : MonoBehaviour
     public int numberOfHealth;
     public int numberOfEnergy;
 
+    [Header("Stocks")]
+    public TextMeshProUGUI GrenadeStock1;
+    public TextMeshProUGUI GrenadeStock2;
+    public TextMeshProUGUI HealthStock;
+    public TextMeshProUGUI EnergyStock;
+
+    [Header("Health & Energy")]
+    public GameObject healthSlot;
+    public GameObject energySlot;
+
+
     [Header("Ammo & Mag")]
     public Rifle rifle;
     public Bazooka bazooka;
@@ -24,5 +35,29 @@ public class GameManager : MonoBehaviour
 
         BazookaAmmoText.text=""+bazooka.presentAmmunition;
         BazookaMagText.text = "" + bazooka.mag;
+
+        GrenadeStock1.text = "" + numberOfgrenades;
+        GrenadeStock2.text = "" + numberOfgrenades;
+        HealthStock.text = "" + numberOfHealth;
+        EnergyStock.text = "" + numberOfEnergy;
+
+        if (numberOfHealth > 0)
+        {
+            healthSlot.SetActive(true);
+        }
+        else if (numberOfHealth <= 0)
+        {
+            healthSlot.SetActive(false);
+        }
+
+        if (numberOfEnergy > 0)
+        {
+            energySlot.SetActive(true);
+        }
+        else if (numberOfEnergy <= 0)
+        {
+            energySlot.SetActive(false);
+        }
+
     }
 }
