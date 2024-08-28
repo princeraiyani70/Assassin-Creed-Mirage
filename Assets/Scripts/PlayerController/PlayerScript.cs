@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour
 
         if (presentEnergy >= 1)
         {
-            movementSpeed = 5f;
+            movementSpeed = 3f;
         }
 
         if (animator.GetFloat("movementValue") >= 0.9999)
@@ -105,7 +105,7 @@ public class PlayerScript : MonoBehaviour
         PlayerMovement();
         SurfaceCheck();
         animator.SetBool("onSurface", onSurface);
-        Debug.Log("Player On Surface" + onSurface);
+        Debug.Log("Player On Surface " + onSurface);
     }
 
     void PlayerMovement()
@@ -117,9 +117,10 @@ public class PlayerScript : MonoBehaviour
 
         var movementInput = (new Vector3(horizontal, 0, vertical)).normalized;
 
-        requiredMoveDir = MCC.flotRotation * movementInput;
+        var requiredMoveDir = MCC.flatRotation * movementInput;
 
         Cc.Move(velocity * movementSpeed * Time.deltaTime);
+
         if (movementAmount > 0 && moveDir.magnitude > 0.2f)
         {
             requireRotation = Quaternion.LookRotation(moveDir);

@@ -42,5 +42,5 @@ public class MainCameraController : MonoBehaviour
         transform.rotation = targetRotation;
     }
 
-    public Quaternion flotRotation => Quaternion.Euler(0, rotY, 0);
+    public Quaternion flatRotation => Quaternion.Euler(0, rotY, 0);
 }
