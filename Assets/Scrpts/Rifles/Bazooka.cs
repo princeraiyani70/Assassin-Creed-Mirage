@@ -89,10 +89,16 @@ public class Bazooka : MonoBehaviour
         if (Physics.Raycast(shootingArea.position, shootingArea.forward, out hitInfo, shootingRange))
         {
             KnightAi knightAi = hitInfo.transform.GetComponent<KnightAi>();
+            KnightAi2 knightAi2 = hitInfo.transform.GetComponent<KnightAi2>();
 
             if (knightAi != null)
             {
                 knightAi.TakeDamage(giveDamage);
+            }
+
+            if (knightAi2 != null)
+            {
+                knightAi2.TakeDamage(giveDamage);
             }
         }
     }

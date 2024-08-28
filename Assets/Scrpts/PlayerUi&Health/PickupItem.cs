@@ -26,6 +26,7 @@ public class PickupItem : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                Missions.instance.Mission1 = true;
                 if (ItemTag == "Sword")
                 {
                     inventory.isWeapon1Picked = true;

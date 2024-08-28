@@ -226,6 +226,7 @@ public class KnightAi : MonoBehaviour
 
         if (currenthealth <= 0)
         {
+            Missions.instance.Mission3 = true;
             Die();
         }
     }

@@ -107,10 +107,16 @@ public class FirstFight : MonoBehaviour
         foreach (Collider knight in hitKnight)
         {
             KnightAi knightAi = knight.GetComponent<KnightAi>();
+            KnightAi2 knightAi2 = knight.GetComponent<KnightAi2>();
 
             if (knightAi != null)
             {
                 knightAi.TakeDamage(giveDamage);
+            }
+
+            if (knightAi2 != null)
+            {
+                knightAi2.TakeDamage(giveDamage);
             }
         }
     }
