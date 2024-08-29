@@ -123,7 +123,7 @@ public class FirstFight : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (attackArea != null)
+        if (attackArea == null)
             return;
 
         Gizmos.DrawWireSphere(attackArea.position, attackRadius);

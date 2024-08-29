@@ -8,7 +8,7 @@ public class MiniMapScript : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 newPosition = player.position;
+        Vector3 newPosition = player.transform.position;
         newPosition.y = transform.position.y;
         transform.position = newPosition;
 

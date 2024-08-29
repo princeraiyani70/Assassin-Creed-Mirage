@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationName: ClimbingUp
   BarrierTag: 
-  minimumHeight: 3
+  minimumHeight: 2
   maximumHeight: 7
   lookAtObstacle: 1
   parkourActionDelay: 0.5
