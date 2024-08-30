@@ -7,7 +7,7 @@ public class KnightAi : MonoBehaviour
     [Header("Character Info")]
     public float movingSpeed;
     public float runningSpeed;
-    public float CurrentmovingSpeed;
+    public float currentmovingSpeed;
     public float turningSpeed = 300f;
     public float stopSpeed = 1f;
     public float maxHealth = 120f;
@@ -36,7 +36,7 @@ public class KnightAi : MonoBehaviour
 
     private void Start()
     {
-        CurrentmovingSpeed = movingSpeed;
+        currentmovingSpeed = movingSpeed;
         currenthealth = maxHealth;
         playerBody = GameObject.Find("Player");
     }
@@ -51,11 +51,13 @@ public class KnightAi : MonoBehaviour
             anim.SetBool("Idle", false);
             Walk();
         }
+
         if (playerInvisionRadius && !playerInattackRadius)
         {
-            anim.SetBool("Idle", true);
+            anim.SetBool("Idle", false);
             ChasePlayer();
         }
+
         if (playerInvisionRadius && playerInattackRadius)
         {
             //Attack
@@ -66,7 +68,7 @@ public class KnightAi : MonoBehaviour
 
     public void Walk()
     {
-        CurrentmovingSpeed = movingSpeed;
+        currentmovingSpeed = movingSpeed;
 
         if (transform.position != destination)
         {
@@ -74,7 +76,7 @@ public class KnightAi : MonoBehaviour
             destinationDirection.y = 0;
             float destinationDistance = destinationDirection.magnitude;
 
-            if (destinationDistance > stopSpeed)
+            if (destinationDistance >= stopSpeed)
             {
                 //Turning
                 destinationReached = false;
@@ -82,7 +84,7 @@ public class KnightAi : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turningSpeed * Time.deltaTime);
 
                 //Moving AI
-                transform.Translate(Vector3.forward * CurrentmovingSpeed * Time.deltaTime);
+                transform.Translate(Vector3.forward * currentmovingSpeed * Time.deltaTime);
 
                 anim.SetBool("Walk", true);
                 anim.SetBool("attack", false);
@@ -98,8 +100,8 @@ public class KnightAi : MonoBehaviour
 
     void ChasePlayer()
     {
-        CurrentmovingSpeed = runningSpeed;
-        transform.position += transform.forward * CurrentmovingSpeed * Time.deltaTime;
+        currentmovingSpeed = runningSpeed;
+        transform.position += transform.forward * currentmovingSpeed * Time.deltaTime;
         transform.LookAt(playerBody.transform);
 
         anim.SetBool("Walk", false);
@@ -109,31 +111,34 @@ public class KnightAi : MonoBehaviour
 
     void SingleMeleeModes()
     {
-        SingleMeleeVal = Random.Range(1, 7);
-
-        if (SingleMeleeVal == 1)
+        if (!previuslyAttack)
         {
-            Attack();
-            //Animation
-            StartCoroutine(Attack1());
-        }
+            SingleMeleeVal = Random.Range(1, 7);
 
-        if (SingleMeleeVal == 2)
-        {
-            Attack();
-            StartCoroutine(Attack2());
-        }
+            if (SingleMeleeVal == 1)
+            {
+                Attack();
+                //Animation
+                StartCoroutine(Attack1());
+            }
 
-        if (SingleMeleeVal == 3)
-        {
-            Attack();
-            StartCoroutine(Attack3());
-        }
+            if (SingleMeleeVal == 2)
+            {
+                Attack();
+                StartCoroutine(Attack2());
+            }
 
-        if (SingleMeleeVal == 4)
-        {
-            Attack();
-            StartCoroutine(Attack4());
+            if (SingleMeleeVal == 3)
+            {
+                Attack();
+                StartCoroutine(Attack3());
+            }
+
+            if (SingleMeleeVal == 4)
+            {
+                Attack();
+                StartCoroutine(Attack4());
+            }
         }
     }
 
@@ -157,7 +162,7 @@ public class KnightAi : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (attackArea != null)
+        if (attackArea == null)
             return;
 
         Gizmos.DrawWireSphere(attackArea.position, attackingRadius);

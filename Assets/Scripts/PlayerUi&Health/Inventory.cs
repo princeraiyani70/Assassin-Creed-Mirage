@@ -67,6 +67,8 @@ public class Inventory : MonoBehaviour
         {
             isWeapon1Active = false;
             IsRifleActive();
+            CurrentWeapon1.SetActive(false);
+
         }
 
         if (Input.GetKeyDown("2") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon2Picked == true)
