@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class FirstFight : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class FirstFight : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.GetMouseButtonDown(0))
+        if (!CrossPlatformInputManager.GetButtonDown("Attack"))
         {
             Timer += Time.deltaTime;
         }
@@ -47,7 +48,7 @@ public class FirstFight : MonoBehaviour
 
     void FistFightModes()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (CrossPlatformInputManager.GetButtonDown("Attack"))
         {
             FistFightVal = Random.Range(1, 7);
 

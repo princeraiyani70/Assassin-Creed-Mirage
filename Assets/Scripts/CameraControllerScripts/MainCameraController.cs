@@ -22,7 +22,7 @@ public class MainCameraController : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void Update()
@@ -30,9 +30,9 @@ public class MainCameraController : MonoBehaviour
         invertXValue = (invertX) ? -1 : 1;
         invertYValue = (invertY) ? -1 : 1;
 
-        rotX += Input.GetAxis("Mouse Y") * invertYValue * rotSpeed;
+        rotX += SimpleInput.GetAxis("Mouse Y") * invertYValue * rotSpeed;
         rotX = Mathf.Clamp(rotX, minVerAngle, maxVerAngle);
-        rotY += Input.GetAxis("Mouse X") * invertXValue * rotSpeed;
+        rotY += SimpleInput.GetAxis("Mouse X") * invertXValue * rotSpeed;
 
         var targetRotation = Quaternion.Euler(rotX, rotY, 0);
 

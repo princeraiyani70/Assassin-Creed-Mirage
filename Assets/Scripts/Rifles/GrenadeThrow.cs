@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class GrenadeThrow : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class GrenadeThrow : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)&&GM.numberOfgrenades>0)
+        if (CrossPlatformInputManager.GetButtonDown("Attack") && GM.numberOfgrenades>0)
         {
             //function
             StartCoroutine(GrenadeAnim());

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class WeaponsMenu : MonoBehaviour
 {
@@ -25,25 +26,31 @@ public class WeaponsMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && weaponsMenuActive == false)
+        if (weaponsMenuActive == true)
         {
-            //Open weapon Menu
             playerUi.SetActive(false);
             miniMapCanvas.SetActive(false);
             currentMenuUi.SetActive(false);
+        }
 
+        if (weaponsMenuActive == false)
+        {
+            playerUi.SetActive(true);
+            miniMapCanvas.SetActive(true);
+            currentMenuUi.SetActive(true);
+        }
+
+        if (CrossPlatformInputManager.GetButtonDown("Tab") && weaponsMenuActive == false)
+        {
+            //Open weapon Menu
             weaponsMenuUi.SetActive(true);
             weaponsMenuActive = true;
             Time.timeScale = 0f;
             mainCamera.GetComponent<MainCameraController>().enabled = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Tab) && weaponsMenuActive == true)
+        else if (CrossPlatformInputManager.GetButtonDown("CloseTab") && weaponsMenuActive == true)
         {
             //close weapon Menu
-            playerUi.SetActive(true);
-            miniMapCanvas.SetActive(true);
-            currentMenuUi.SetActive(true);
-
             weaponsMenuUi.SetActive(false);
             weaponsMenuActive = false;
             Time.timeScale = 1f;

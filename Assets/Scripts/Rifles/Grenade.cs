@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Grenade : MonoBehaviour
@@ -41,11 +42,17 @@ public class Grenade : MonoBehaviour
             //Add Force
 
             //Damage
-            Object obj = nearbyObject.GetComponent<Object>();
+            KnightAi knightAi =nearbyObject.GetComponent<KnightAi>();
+            KnightAi2 knightAi2 = nearbyObject.GetComponent<KnightAi2>();
 
-            if(obj != null)
+            if (knightAi != null)
             {
-                obj.objectHitDamage(giveDamage);
+                knightAi.TakeDamage(giveDamage);
+            }
+
+            if (knightAi2 != null)
+            {
+                knightAi2.TakeDamage(giveDamage);
             }
         }
 

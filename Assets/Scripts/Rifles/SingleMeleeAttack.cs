@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class SingleMeleeAttack : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class SingleMeleeAttack : MonoBehaviour
 
     void SingleMeleeModes()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (CrossPlatformInputManager.GetButtonDown("Attack"))
         {
             singleMeleeVal = Random.Range(1, 7);
 
@@ -71,10 +72,16 @@ public class SingleMeleeAttack : MonoBehaviour
         foreach (Collider knight in hitKnight)
         {
             KnightAi knightAi = knight.GetComponent<KnightAi>();
+            KnightAi2 knightAi2 = knight.GetComponent<KnightAi2>();
 
             if (knightAi != null)
             {
                 knightAi.TakeDamage(giveDamage);
+            }
+
+            if (knightAi2 != null)
+            {
+                knightAi2.TakeDamage(giveDamage);
             }
         }
     }

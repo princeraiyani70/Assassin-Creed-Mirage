@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Inventory : MonoBehaviour
 {
@@ -50,20 +51,20 @@ public class Inventory : MonoBehaviour
             NoWeapon.SetActive(true);
         }
 
-        if (Input.GetMouseButtonDown(0) && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && fistFightMode == false)
+        if (CrossPlatformInputManager.GetButtonDown("Attack") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && fistFightMode == false)
         {
             fistFightMode = true;
             IsRifleActive();
         }
 
-        if (Input.GetKeyDown("1") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon1Picked == true)
+        if (CrossPlatformInputManager.GetButtonDown("1") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon1Picked == true)
         {
             isWeapon1Active = true;
             IsRifleActive();
             CurrentWeapon1.SetActive(true);
             NoWeapon.SetActive(false);
         }
-        else if (Input.GetKeyDown("1") && isWeapon1Active == true)
+        else if (CrossPlatformInputManager.GetButtonDown("1") && isWeapon1Active == true)
         {
             isWeapon1Active = false;
             IsRifleActive();
@@ -71,42 +72,42 @@ public class Inventory : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown("2") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon2Picked == true)
+        if (CrossPlatformInputManager.GetButtonDown("2") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon2Picked == true)
         {
             isWeapon2Active = true;
             IsRifleActive();
             CurrentWeapon2.SetActive(true);
             NoWeapon.SetActive(false);
         }
-        else if (Input.GetKeyDown("2") && isWeapon2Active == true)
+        else if (CrossPlatformInputManager.GetButtonDown("2") && isWeapon2Active == true)
         {
             isWeapon2Active = false;
             IsRifleActive();
             CurrentWeapon2.SetActive(false);
         }
 
-        if (Input.GetKeyDown("3") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon3Picked == true)
+        if (CrossPlatformInputManager.GetButtonDown("3") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon3Picked == true)
         {
             isWeapon3Active = true;
             IsRifleActive();
             CurrentWeapon3.SetActive(true);
             NoWeapon.SetActive(false);
         }
-        else if (Input.GetKeyDown("3") && isWeapon3Active == true)
+        else if (CrossPlatformInputManager.GetButtonDown("3") && isWeapon3Active == true)
         {
             isWeapon3Active = false;
             IsRifleActive();
             CurrentWeapon3.SetActive(false);
         }
 
-        if (Input.GetKeyDown("4") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon4Picked == true)
+        if (CrossPlatformInputManager.GetButtonDown("4") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && isWeapon4Picked == true)
         {
             isWeapon4Active = true;
             IsRifleActive();
             CurrentWeapon4.SetActive(true);
             NoWeapon.SetActive(false);
         }
-        else if (Input.GetKeyDown("4") && isWeapon4Active == true)
+        else if (CrossPlatformInputManager.GetButtonDown("4") && isWeapon4Active == true)
         {
             isWeapon4Active = false;
             IsRifleActive();
@@ -121,12 +122,12 @@ public class Inventory : MonoBehaviour
             IsRifleActive();
         }
 
-        if (Input.GetKeyDown("5") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfHealth > 0 && playerScript.presentHealth < 95)
+        if (CrossPlatformInputManager.GetButtonDown("5") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfHealth > 0 && playerScript.presentHealth < 95)
         {
             StartCoroutine(IncreaseHealth());
         }
 
-        if (Input.GetKeyDown("6") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfEnergy > 0 && playerScript.presentEnergy < 95)
+        if (CrossPlatformInputManager.GetButtonDown("6") && isWeapon1Active == false && isWeapon2Active == false && isWeapon3Active == false && isWeapon4Active == false && GM.numberOfEnergy > 0 && playerScript.presentEnergy < 95)
         {
             StartCoroutine(IncreaseEnergy());
         }

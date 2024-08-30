@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Rifle : MonoBehaviour
 {
@@ -46,13 +47,13 @@ public class Rifle : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButtonDown(0) && isMoving==false)
+        if (CrossPlatformInputManager.GetButtonDown("Attack") && isMoving==false)
         {
             animator.SetBool("RifleActive", true);
             animator.SetBool("Shooting", true);
             Shoot();
         }
-        else if (!Input.GetMouseButtonDown(0))
+        else if (!CrossPlatformInputManager.GetButtonDown("Attack"))
         {
             animator.SetBool("Shooting", false);
         }
@@ -89,10 +90,16 @@ public class Rifle : MonoBehaviour
         if (Physics.Raycast(shootingArea.position, shootingArea.forward, out hitInfo, shootingRange))
         {
             KnightAi knightAi = hitInfo.transform.GetComponent<KnightAi>();
+            KnightAi2 knightAi2 = hitInfo.transform.GetComponent<KnightAi2>();
 
             if (knightAi != null)
             {
                 knightAi.TakeDamage(giveDamage);
+            }
+
+            if (knightAi2 != null)
+            {
+                knightAi2.TakeDamage(giveDamage);
             }
         }
     }

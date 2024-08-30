@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class ParkourControllerScript : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class ParkourControllerScript : MonoBehaviour
     {
 
         var hitData = enviromentCheaker.CheckObstacle();
-        if (Input.GetButton("Jump") && !playerInAction)
+        if (CrossPlatformInputManager.GetButtonDown("Jump") && !playerInAction)
         {
 
             if (hitData.hitFound)
@@ -39,7 +40,7 @@ public class ParkourControllerScript : MonoBehaviour
         if (playerScript.playerOnLedge && !playerInAction && !hitData.hitFound)
         {
             bool canJump = true;
-            if (playerScript.LedgeInfo.height > autoJumpHeightLimit && !Input.GetButton("Jump"))
+            if (playerScript.LedgeInfo.height > autoJumpHeightLimit && !CrossPlatformInputManager.GetButtonDown("Jump"))
             {
                 canJump = false;
             }

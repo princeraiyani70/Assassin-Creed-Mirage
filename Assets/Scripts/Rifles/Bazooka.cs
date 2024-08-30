@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Bazooka : MonoBehaviour
 {
@@ -46,13 +47,13 @@ public class Bazooka : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButtonDown(0) && isMoving == false)
+        if (CrossPlatformInputManager.GetButtonDown("Attack") && isMoving == false)
         {
             animator.SetBool("BazookaActive", true);
             animator.SetBool("BazookaShooting", true);
             Shoot();
         }
-        else if (!Input.GetMouseButtonDown(0))
+        else if (!CrossPlatformInputManager.GetButtonDown("Attack"))
         {
             animator.SetBool("BazookaShooting", false);
         }

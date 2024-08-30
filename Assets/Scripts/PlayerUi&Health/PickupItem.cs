@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PickupItem : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class PickupItem : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.transform.position) < itemRadius)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (CrossPlatformInputManager.GetButtonDown("Pick"))
             {
                 Missions.instance.Mission1 = true;
                 if (ItemTag == "Sword")
